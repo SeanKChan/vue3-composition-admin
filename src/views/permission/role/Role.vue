@@ -279,7 +279,7 @@ export default defineComponent({
           confirmButtonText: 'Confirm',
           cancelButtonText: 'Cancel',
           type: 'warning'
-        }).then(async() => {
+        }).then(async () => {
           delRole(row.key).then((res) => {
             state.rolesList.splice($index, 1)
             ctx.$message({
@@ -291,12 +291,12 @@ export default defineComponent({
       }
     })
 
-    const confirmRole = async() => {
+    const confirmRole = async () => {
       const isEdit = state.dialogType === 'edit'
       const checkedKeys = (treeRef.value as any).getCheckedKeys()
       state.role.routes = generateTree(cloneDeep(state.serviceRoutes as RouteRecordRaw[]), '/', checkedKeys)
       if (isEdit) {
-        await updateRole(state.role.key, { role: state.role }).then(async() => {
+        await updateRole(state.role.key, { role: state.role }).then(async () => {
           for (let index = 0; index < state.rolesList.length; index++) {
             if (state.rolesList[index].key === state.role.key) {
               state.rolesList.splice(index, 1, Object.assign({}, state.role))
@@ -305,7 +305,7 @@ export default defineComponent({
           }
         })
       } else {
-        await createRole({ role: state.role }).then(async(res) => {
+        await createRole({ role: state.role }).then(async (res) => {
           state.role.key = res?.data.key
           state.rolesList.push(state.role)
         })

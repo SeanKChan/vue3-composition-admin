@@ -13,9 +13,11 @@
 
 <script lang="ts">
 import { useStore } from '@/store'
-import { computed, defineComponent, onBeforeMount, ref } from 'vue'
+import { computed, defineComponent, onBeforeMount, ref, watchEffect } from 'vue'
 import AdminDashboard from './admin/Index.vue'
 import EditorDashboard from './editor/Index.vue'
+import { usePageVisibility } from '@/utils/hooks'
+
 export default defineComponent({
   components: {
     AdminDashboard,
@@ -27,14 +29,22 @@ export default defineComponent({
     const roles = computed(() => {
       return store.state.user.roles
     })
+
+    const pageVisible = usePageVisibility()
+
     onBeforeMount(() => {
       if (!roles.value.includes('admin')) {
         currentRole.value = 'editor-dashboard'
       }
     })
 
+    watchEffect(() => {
+      console.log('visible', pageVisible.value)
+    })
+
     return {
-      currentRole
+      currentRole,
+      pageVisible
     }
   }
 })

@@ -143,47 +143,29 @@ export default defineComponent({
       {
         selector: `#${props.id}`,
         height: props.height,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         body_class: 'panel-body',
-        // eslint-disable-next-line @typescript-eslint/camelcase
         object_resizing: false,
         toolbar: props.toolbar.length > 0 ? props.toolbar : toolbar,
         menubar: props.menubar,
         plugins: plugins,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         language_url: store.state.app.language === 'en' ? '' : `${process.env.BASE_URL}tinymce/langs/${store.state.app.language}.js`,
         language: 'zh_CN',
-        // eslint-disable-next-line @typescript-eslint/camelcase
-        // eslint-disable-next-line @typescript-eslint/camelcase
         skin_url: `${process.env.BASE_URL}tinymce/skins/`,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         emoticons_database_url: `${process.env.BASE_URL}tinymce/emojis.min.js`,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         end_container_on_empty_block: true,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         powerpaste_word_import: 'clean',
-        // eslint-disable-next-line @typescript-eslint/camelcase
         code_dialog_height: 450,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         code_dialog_width: 1000,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         advlist_bullet_styles: 'square',
-        // eslint-disable-next-line @typescript-eslint/camelcase
         advlist_number_styles: 'default',
-        // eslint-disable-next-line @typescript-eslint/camelcase
         imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
-        // eslint-disable-next-line @typescript-eslint/camelcase
         default_link_target: '_blank',
-        // eslint-disable-next-line @typescript-eslint/camelcase
         link_title: false,
         // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin
-        // eslint-disable-next-line @typescript-eslint/camelcase
         nonbreaking_force_tab: true,
         // https://www.tiny.cloud/docs-3x/reference/configuration/Configuration3x@convert_urls/
         // https://stackoverflow.com/questions/5196205/disable-tinymce-absolute-to-relative-url-conversions
-        // eslint-disable-next-line @typescript-eslint/camelcase
         convert_urls: false,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         init_instance_callback: (editor: any) => {
           if (props.value) {
             editor.setContent(props.value)

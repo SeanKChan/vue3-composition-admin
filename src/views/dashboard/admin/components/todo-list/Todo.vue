@@ -96,7 +96,7 @@ export default defineComponent({
     }
 
     const cancelEdit = (e: KeyboardEvent) => {
-      ;(e.target as HTMLInputElement).value = props.todo.text
+      (e.target as HTMLInputElement).value = props.todo.text
       editing.value = false
     }
 

@@ -8,7 +8,7 @@
 
 import { ElLoading } from 'element-plus'
 
-export default function() {
+export default function () {
   const loading = (title: string) => {
     const loadingInstance = ElLoading.service({ text: title })
     return loadingInstance

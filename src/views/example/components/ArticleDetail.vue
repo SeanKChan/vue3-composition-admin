@@ -280,7 +280,7 @@ export default defineComponent({
         store.dispatch(TagsActionTypes.ACTION_UPDATE_VISITED_VIEW, tagView)
       }
     }
-    const fetchData = async(id: any) => {
+    const fetchData = async (id: any) => {
       try {
         const data = await getArticle({ id })
         if (data) {
@@ -348,7 +348,7 @@ export default defineComponent({
       dataMap.postForm.status = 'draft'
     }
 
-    const getRemoteUserList = async(name: string) => {
+    const getRemoteUserList = async (name: string) => {
       const data = await getUsers({ name })
       if (!data?.data.items) return
       dataMap.userListOptions = data.data.items.map((v: any) => v.name)

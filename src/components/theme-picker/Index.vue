@@ -20,6 +20,7 @@ import { useStore } from '@/store'
 import { computed, defineComponent, getCurrentInstance, reactive, toRefs, watch } from 'vue'
 import Loading from '@/utils/loading'
 import { useI18n } from 'vue-i18n'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const version = require('element-plus/package.json').version // element-ui version from node_modules
 const ORIGINAL_THEME = '#409EFF' // default color
 
@@ -77,7 +78,7 @@ export default defineComponent({
     }
 
     const getCSSString = (url: string, variable: string) => {
-      return new Promise(resolve => {
+      return new Promise<void>(resolve => {
         const xhr = new XMLHttpRequest()
         xhr.onreadystatechange = () => {
           if (xhr.readyState === 4 && xhr.status === 200) {
@@ -98,7 +99,7 @@ export default defineComponent({
       return newStyle
     }
 
-    watch(() => state.theme, async(value: string) => {
+    watch(() => state.theme, async (value: string) => {
       if (value) {
         const oldValue = state.chalk ? state.theme : ORIGINAL_THEME
         const themeCluster = getThemeCluster(value.replace('#', ''))

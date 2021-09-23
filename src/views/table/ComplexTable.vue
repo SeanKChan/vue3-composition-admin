@@ -524,7 +524,7 @@ export default defineComponent({
       },
       createData() {
         const form = unref(dataForm)
-        form.validate(async(valid: any) => {
+        form.validate(async (valid: any) => {
           if (valid) {
             const ArticleModel = dataMap.tempArticleModel
             ArticleModel.id = Math.round(Math.random() * 100) + 1024 // mock a id
@@ -560,7 +560,7 @@ export default defineComponent({
       },
       updateData() {
         const form = unref(dataForm)
-        form.validate(async(valid: any) => {
+        form.validate(async (valid: any) => {
           if (valid) {
             const tempData = Object.assign({}, dataMap.tempArticleModel)
             tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464

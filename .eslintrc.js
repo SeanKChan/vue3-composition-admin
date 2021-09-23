@@ -10,6 +10,14 @@ module.exports = {
   env: {
     node: true
   },
+  globals: {
+    defineProps: 'readonly',
+    defineEmits: 'readonly',
+    defineExpose: 'readonly',
+    withDefaults: 'readonly',
+    $ref: 'readonly',
+    $computed: 'readonly'
+  },
   extends: [
     'plugin:vue/vue3-strongly-recommended',
     '@vue/standard',
@@ -33,7 +41,7 @@ module.exports = {
         }
       }],
     '@typescript-eslint/no-explicit-any': 'off',
-    'space-before-function-paren': ['error', 'never'],
+    'space-before-function-paren': ["error", {"anonymous": "always", "named": "never", "asyncArrow": "always"}],
     'vue/array-bracket-spacing': 'error',
     'vue/arrow-spacing': 'error',
     'vue/block-spacing': 'error',

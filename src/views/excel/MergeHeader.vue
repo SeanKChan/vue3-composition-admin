@@ -93,7 +93,7 @@ export default defineComponent({
       downloadLoading: false
     })
 
-    const fetchData = async() => {
+    const fetchData = async () => {
       dataMap.listLoading = true
       const data = await getArticles({ /* Your params here */ })
       dataMap.list = data?.data.items ?? []

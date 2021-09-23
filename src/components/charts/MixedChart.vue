@@ -49,7 +49,7 @@ export default defineComponent({
     } = resize()
     const initChart = () => {
       const barChart = init(document.getElementById(props.id) as HTMLDivElement)
-      const xData = (function() {
+      const xData = (function () {
         const data = []
         for (let i = 1; i < 13; i++) {
           data.push(i + 'month')

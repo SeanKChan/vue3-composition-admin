@@ -30,7 +30,7 @@ module.exports = {
     hot: true,
     port: devPort,
     open: true,
-    noInfo: false,
+    noInfo: true,
     overlay: {
       warnings: true,
       errors: true,

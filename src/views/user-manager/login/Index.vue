@@ -204,7 +204,7 @@ export default defineComponent({
         })
       },
       handleLogin: () => {
-        (loginFormRef.value as any).validate(async(valid: boolean) => {
+        (loginFormRef.value as any).validate(async (valid: boolean) => {
           if (valid) {
             state.loading = true
             await store.dispatch(UserActionTypes.ACTION_LOGIN, state.loginForm)

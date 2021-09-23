@@ -15,7 +15,7 @@ import { useRoute } from 'vue-router'
 const store = useStore()
 const WIDTH = 992 // refer to Bootstrap's responsive design
 
-export default function() {
+export default function () {
   const device = computed(() => {
     return store.state.app.device
   })

@@ -7,7 +7,7 @@
  */
 
 import { RouteRecordRaw } from 'vue-router'
-export default function() {
+export default function () {
   const flattenRoutes = (routes: RouteRecordRaw[]) => {
     let data: RouteRecordRaw[] = []
     routes.forEach(route => {

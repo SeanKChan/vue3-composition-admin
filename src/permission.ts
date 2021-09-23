@@ -30,7 +30,7 @@ NProgress.configure({ showSpinner: false })
 //   return `${title}`
 // }
 
-router.beforeEach(async(to: RouteLocationNormalized, _: RouteLocationNormalized, next: any) => {
+router.beforeEach(async (to: RouteLocationNormalized, _: RouteLocationNormalized, next: any) => {
   // Start progress bar
   NProgress.start()
   const store = useStore()

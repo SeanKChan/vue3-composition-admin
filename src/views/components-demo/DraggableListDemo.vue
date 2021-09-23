@@ -43,7 +43,7 @@ export default defineComponent({
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       fetchData()
     })
-    const fetchData = async() => {
+    const fetchData = async () => {
       const res: any = await getArticles({ /* Your params here */ })
       state.list1 = res.data.items.splice(0, 5)
       state.list2 = res.data.items
