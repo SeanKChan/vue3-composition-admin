@@ -13,10 +13,18 @@
 
 <script lang="ts">
 import { useStore } from '@/store'
-import { computed, defineComponent, onBeforeMount, ref, watchEffect } from 'vue'
+import {
+  computed,
+  defineComponent,
+  onBeforeMount,
+  onMounted,
+  ref,
+  watchEffect
+} from 'vue'
 import AdminDashboard from './admin/Index.vue'
 import EditorDashboard from './editor/Index.vue'
 import { usePageVisibility } from '@/utils/hooks'
+import useEventEmitter from '@/utils/hooks/useEventEmitter'
 
 export default defineComponent({
   components: {
@@ -32,10 +40,22 @@ export default defineComponent({
 
     const pageVisible = usePageVisibility()
 
+    const $bus = useEventEmitter()
+
     onBeforeMount(() => {
       if (!roles.value.includes('admin')) {
         currentRole.value = 'editor-dashboard'
       }
+    })
+
+    onMounted(() => {
+      $bus.useSubcription((val: any) => {
+        console.log('recieved: ', val)
+      })
+
+      setTimeout(() => {
+        $bus.emit('hello vue3 hooks ')
+      }, 3000)
     })
 
     watchEffect(() => {
@@ -44,7 +64,8 @@ export default defineComponent({
 
     return {
       currentRole,
-      pageVisible
+      pageVisible,
+      $bus
     }
   }
 })
