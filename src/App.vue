@@ -12,26 +12,25 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-export default defineComponent({
-
-})
+export default defineComponent({})
 </script>
 <style lang="scss">
-.el-menu-item:hover{
+.el-menu-item:hover {
   outline: 0 !important;
-  color: #409EFF !important;
+  color: #409eff !important;
 }
 
-.el-submenu__title:focus, .el-submenu__title:hover{
+.el-submenu__title:focus,
+.el-submenu__title:hover {
   outline: 0 !important;
   color: #fff !important;
-  background: #435EBE !important;
+  background: #435ebe !important;
   border-radius: 8px !important;
 }
-.el-menu-item:hover{
-   outline: 0 !important;
+.el-menu-item:hover {
+  outline: 0 !important;
   color: #fff !important;
-  background: #435EBE !important;
+  background: #435ebe !important;
   border-radius: 8px !important;
 }
 </style>
