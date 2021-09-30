@@ -18,6 +18,7 @@ export default {
     icons: 'Icons',
     components: 'Components',
     tinymce: 'Tinymce',
+    zhhTest: 'Zhh Test',
     markdown: 'Markdown',
     jsonEditor: 'JSON Editor',
     splitPane: 'SplitPane',

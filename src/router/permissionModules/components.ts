@@ -62,6 +62,18 @@ const componentsRouter: Array<RouteRecordRaw> = [
       //   }
       // },
       {
+        path: 'zhh-test',
+        component: () =>
+          import(
+            '@/views/components-demo/ZhhTest.vue'
+          ),
+        name: 'ZhhTest',
+        meta: {
+          title: 'zhhTest',
+          noCache: true
+        }
+      },
+      {
         path: 'count-to',
         component: () =>
           import(
