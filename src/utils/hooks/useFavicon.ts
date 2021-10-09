@@ -13,20 +13,19 @@ const ImgTypeMap = {
 type ImgTypes = keyof typeof ImgTypeMap;
 
 const useFavicon = (favUrl: string) => {
-  if (!favUrl) return
-
-  const cutUrl = favUrl.split('.')
-  const imgSuffix = cutUrl[cutUrl.length - 1].toLocaleUpperCase() as ImgTypes
-
-  const link: HTMLLinkElement =
-    document.querySelector("link[rel*='icon']") || document.createElement('link')
-
-  link.type = ImgTypeMap[imgSuffix]
-  link.href = favUrl
-  // 大部分浏览器只会识别'icon' 只有IE会识别整个名称'shortcut icon'
-  link.rel = 'shortcut icon'
-
   onMounted(() => {
+    if (!favUrl) return
+
+    const cutUrl = favUrl.split('.')
+    const imgSuffix = cutUrl[cutUrl.length - 1].toLocaleUpperCase() as ImgTypes
+
+    const link: HTMLLinkElement =
+      document.querySelector("link[rel*='icon']") || document.createElement('link')
+
+    link.type = ImgTypeMap[imgSuffix]
+    link.href = favUrl
+    // 大部分浏览器只会识别'icon' 只有IE会识别整个名称'shortcut icon'
+    link.rel = 'shortcut icon'
     document.getElementsByTagName('head')[0].appendChild(link)
   })
 }

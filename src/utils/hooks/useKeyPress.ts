@@ -152,40 +152,21 @@ function useKeyPress(
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const el = getTargetElement(target, window)!
-
   onMounted(() => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const el = getTargetElement(target, window)!
     for (const eventName of events) {
       el.addEventListener(eventName, callbackHandler)
     }
   })
 
   onUnmounted(() => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const el = getTargetElement(target, window)!
     for (const eventName of events) {
       el.removeEventListener(eventName, callbackHandler)
     }
   })
-
-  // useEffect(() => {
-  //   const callbackHandler = (event) => {
-  //     const genGuard: KeyPredicate = genKeyFormater(keyFilter);
-  //     if (genGuard(event)) {
-  //       return callbackRef.value(event);
-  //     }
-  //   };
-  //
-  //   const el = getTargetElement(target, window)!;
-  //
-  //   for (const eventName of events) {
-  //     el.addEventListener(eventName, callbackHandler);
-  //   }
-  //   return () => {
-  //     for (const eventName of events) {
-  //       el.removeEventListener(eventName, callbackHandler);
-  //     }
-  //   };
-  // }, [events, keyFilter, target]);
 }
 
 export default useKeyPress

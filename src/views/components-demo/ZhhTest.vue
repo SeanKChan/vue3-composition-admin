@@ -50,7 +50,7 @@
     </div>
     <div>
       测试useHover
-      <div ref="elmRefs">
+      <div id="elmRefs">
         haha
         {{ isHovering }}
       </div>
@@ -111,6 +111,42 @@
       <p>测试useTextSelection You can select text all page.</p>
       <p>Result：{{ text }}</p>
     </div>
+    <div>
+      测试useTitle
+      <p>sets title of the page.</p>
+    </div>
+    <div>
+      <div id="demo2">
+        '测试useInViewport'
+      </div>
+      <div>
+        {{ inViewPort ? 'visible' : 'hidden' }}
+      </div>
+    </div>
+    <div>
+      测试useSize<br>
+      dimensions -- width: {{ width }} px, height: {{ height }} px
+    </div>
+    <div>
+      <div>{{ scrollValue }}</div>
+      <div
+        id="useRefId"
+        style="height:100px; width:100px; border: solid 1px #000; overflow:scroll; whiteSpace: nowrap;fontSize: 32px"
+      >
+        <div>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aspernatur atque, debitis ex
+          excepturi explicabo iste iure labore molestiae neque optio perspiciatis
+        </div>
+        <div>
+          Aspernatur cupiditate, deleniti id incidunt mollitia omnis! A aspernatur assumenda
+          consequuntur culpa cumque dignissimos enim eos, et fugit natus nemo nesciunt
+        </div>
+        <div>
+          Alias aut deserunt expedita, inventore maiores minima officia porro rem. Accusamus ducimus
+          magni modi mollitia nihil nisi provident
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -127,6 +163,10 @@ import useKeyPress from '@/utils/hooks/useKeyPress'
 import useMouse from '@/utils/hooks/useMouse'
 import { configResponsive, useResponsive } from '@/utils/hooks/useResponsive'
 import useTextSelection from '@/utils/hooks/useTextSelection'
+import useTitle from '@/utils/hooks/useTitle'
+import useInViewport from '@/utils/hooks/useInViewport'
+import useSize from '@/utils/hooks/useSize'
+import useScroll from '@/utils/hooks/useScroll'
 
 export default defineComponent({
 
@@ -149,9 +189,7 @@ export default defineComponent({
       urlTest.value = val
     }
     useFavicon(urlTest.value)
-    const elmRefs = ref<null | HTMLElement>(null)
-    const isHovering = ref()
-    isHovering.value = useHover(elmRefs.value)
+    const isHovering = useHover(() => document.getElementById('elmRefs'))
 
     const { status, toggle, load, unload } = useExternal('./index.js')
 
@@ -181,6 +219,13 @@ export default defineComponent({
     const responsive = useResponsive()
     const stateText = useTextSelection()
     console.warn(stateText)
+    useTitle('useTitle', { restoreOnUnmount: true })
+    const inViewPort = ref(useInViewport(() => document.querySelector('#demo2')))
+    console.log(inViewPort.value + 'inViewPort')
+    const dom = document.querySelector('body')
+    const state = useSize(dom)
+    console.log(state)
+    const scrollValue = useScroll(() => document.getElementById('useRefId'))
     return {
       ctx,
       useDocumentVisibility,
@@ -194,7 +239,6 @@ export default defineComponent({
       setUrl,
       DEFAULT_FAVICON_URL,
       GOOGLE_FAVICON_URL,
-      elmRefs,
       isHovering,
       status,
       toggle,
@@ -206,7 +250,11 @@ export default defineComponent({
       keyPressCounter,
       mouse,
       responsive,
-      ...toRefs(stateText)
+      ...toRefs(stateText),
+      useTitle,
+      inViewPort,
+      ...toRefs(state),
+      scrollValue
     }
   }
 })

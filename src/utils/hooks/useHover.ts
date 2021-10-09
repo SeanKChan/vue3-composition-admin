@@ -1,6 +1,5 @@
-import { ref, onMounted } from 'vue'
-// import useEventListener from './useEventListener'
-import { BasicTarget } from '../dom'
+import { ref, onMounted, onUnmounted } from 'vue'
+import { BasicTarget, getTargetElement } from '../dom'
 
 export interface Options {
   onEnter?: () => void
@@ -12,8 +11,6 @@ function useHover(target: BasicTarget, options?: Options) {
   const state = ref(false)
   const setTrue = () => { state.value = true }
   const setFalse = () => { state.value = false }
-  console.log(state.value + 'state')
-
   // useEventListener(
   //   'mouseEnter',
   //   () => {
@@ -36,14 +33,41 @@ function useHover(target: BasicTarget, options?: Options) {
   //   }
   // )
   onMounted(() => {
-    document.addEventListener(
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const targetElement = getTargetElement(target, window)!
+    if (!targetElement.addEventListener) {
+      return
+    }
+    targetElement.addEventListener(
       'mouseenter',
       () => {
         onEnter && onEnter()
         setTrue()
       }
     )
-    document.addEventListener(
+    targetElement.addEventListener(
+      'mouseleave',
+      () => {
+        onLeave && onLeave()
+        setFalse()
+      }
+    )
+  })
+
+  onUnmounted(() => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const targetElement = getTargetElement(target, window)!
+    if (!targetElement.removeEventListener) {
+      return
+    }
+    targetElement.removeEventListener(
+      'mouseenter',
+      () => {
+        onEnter && onEnter()
+        setTrue()
+      }
+    )
+    targetElement.removeEventListener(
       'mouseleave',
       () => {
         onLeave && onLeave()

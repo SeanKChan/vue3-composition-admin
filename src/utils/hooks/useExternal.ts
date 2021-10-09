@@ -29,9 +29,7 @@ export default function useExternal(path: string, options?: Options) {
 
   const refValue = ref<ExternalElement>()
 
-  const unload: () => void = () => {
-    setActive(false)
-  }
+  const unload: () => void = () => setActive(false)
   const load: () => void = () => setActive(true)
   const toggle: () => void = () => setActive(!active.value)
 
@@ -101,15 +99,7 @@ export default function useExternal(path: string, options?: Options) {
     }
     refValue.value.addEventListener('load', setStateFromEvent)
     refValue.value.addEventListener('error', setStateFromEvent)
-    // if (refValue.value) {
-    //   refValue.value.removeEventListener('load', setStateFromEvent)
-    //   refValue.value.removeEventListener('error', setStateFromEvent)
-    // }
   })
-
-  // onUnmounted(() => {
-  // })
-  // return { toggle, load, unload }
 
   return { status, unload, load, toggle }
 }

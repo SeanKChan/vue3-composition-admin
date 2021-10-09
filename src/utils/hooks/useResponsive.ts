@@ -65,12 +65,12 @@ export function useResponsive() {
   const setState = (val: ResponsiveInfo) => {
     state.value = val
   }
-  if (!windowExists) return
 
   const subscriber = () => {
     setState(info)
   }
   onMounted(() => {
+    if (!windowExists) return
     subscribers.add(subscriber)
   })
 

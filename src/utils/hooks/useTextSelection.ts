@@ -88,27 +88,27 @@ export default function useTextSelection(target?: BasicTarget) {
     selObj.removeAllRanges()
   }
 
-  // 获取 target 需要放在 useEffect 里，否则存在组件未加载好的情况而导致元素获取不到
-  const el = getTargetElement(target, document)
-
-  if (!el) {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    return state
-  }
-
-  // watch(el, () => {
-  //   el.addEventListener('mouseup', mouseupHandler)
-  //
-  //   document.addEventListener('mousedown', mousedownHandler)
-  // })
-
   onMounted(() => {
+    // 获取 target 需要放在 useEffect 里，否则存在组件未加载好的情况而导致元素获取不到
+    const el = getTargetElement(target, document)
+
+    if (!el) {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      return () => {}
+    }
     el.addEventListener('mouseup', mouseupHandler)
 
     document.addEventListener('mousedown', mousedownHandler)
   })
 
   onUnmounted(() => {
+    // 获取 target 需要放在 useEffect 里，否则存在组件未加载好的情况而导致元素获取不到
+    const el = getTargetElement(target, document)
+
+    if (!el) {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      return () => {}
+    }
     el.removeEventListener('mouseup', mouseupHandler)
     document.removeEventListener('mousedown', mousedownHandler)
   })
