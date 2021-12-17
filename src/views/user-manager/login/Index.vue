@@ -27,7 +27,7 @@
     >
       <div class="title-container">
         <h3 class="title">
-          {{ t("login.title") }}
+          {{ t('login.title') }}
         </h3>
         <LangSelect
           :isWhite="true"
@@ -41,7 +41,7 @@
         </span>
         <el-input
           ref="userNameRef"
-          v-model="loginForm.username"
+          v-model.trim="loginForm.username"
           :placeholder="t('login.username')"
           name="username"
           type="text"
@@ -63,7 +63,7 @@
           <el-input
             :key="passwordType"
             ref="passwordRef"
-            v-model="loginForm.password"
+            v-model.trim="loginForm.password"
             :type="passwordType"
             :placeholder="t('login.password')"
             name="password"
@@ -90,17 +90,17 @@
         style="width:100%; margin-bottom:30px;"
         @click.prevent="handleLogin"
       >
-        {{ t("login.logIn") }}
+        {{ t('login.logIn') }}
       </el-button>
 
       <div style="position:relative">
         <div class="tips">
-          <span>{{ t("login.username") }} : admin </span>
-          <span>{{ t("login.password") }} : {{ t("login.any") }} </span>
+          <span>{{ t('login.username') }} : admin </span>
+          <span>{{ t('login.password') }} : {{ t('login.any') }} </span>
         </div>
         <div class="tips">
-          <span>{{ t("login.username") }} : editor </span>
-          <span>{{ t("login.password") }} : {{ t("login.any") }} </span>
+          <span>{{ t('login.username') }} : editor </span>
+          <span>{{ t('login.password') }} : {{ t('login.any') }} </span>
         </div>
 
         <el-button
@@ -108,7 +108,7 @@
           type="primary"
           @click="showDialog = true"
         >
-          {{ t("login.thirdparty") }}
+          {{ t('login.thirdparty') }}
         </el-button>
       </div>
     </el-form>
@@ -117,7 +117,7 @@
       :title="t('login.thirdparty')"
       v-model="showDialog"
     >
-      {{ t("login.thirdpartyTips") }}
+      {{ t('login.thirdpartyTips') }}
       <br>
       <br>
       <br>
@@ -236,12 +236,15 @@ export default defineComponent({
       }, {} as LocationQuery)
     }
 
-    watch(() => route.query, query => {
-      if (query) {
-        state.redirect = query.redirect?.toString() ?? ''
-        state.otherQuery = getOtherQuery(query)
+    watch(
+      () => route.query,
+      query => {
+        if (query) {
+          state.redirect = query.redirect?.toString() ?? ''
+          state.otherQuery = getOtherQuery(query)
+        }
       }
-    })
+    )
 
     onMounted(() => {
       if (state.loginForm.username === '') {
@@ -317,9 +320,12 @@ export default defineComponent({
   video {
     position: absolute;
     /* Vertical and Horizontal center*/
-    top: 0; left: 0; right: 0; bottom: 0;
-    width:100%;
-    height:100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     z-index: -1;
   }

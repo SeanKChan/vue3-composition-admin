@@ -45,31 +45,29 @@ module.exports = {
       ]
     }
   },
-  configureWebpack(){
-    return {
-      resolve:{
-        alias:{
-          '@':resolve('src'),
-          '*':resolve(''),
-          'Assets':resolve('src/assets')
-        }
-      },
-      module:{
-        rules: [
-          {
-            test: /\.(json5?|ya?ml)$/, // target json, json5, yaml and yml files
-            loader: '@intlify/vue-i18n-loader',
-            include: [ // Use `Rule.include` to specify the files of locale messages to be pre-compiled
-              path.resolve(__dirname, 'src/lang')
-            ]
-          },
-        ],
-      },
-      plugins:[
-        new WebpackBar({
-          name:title,
-        })
-      ]
-    }
-  },
+  chainWebpack: (config) => {
+    config.resolve.alias
+    .set('@', resolve('src'))
+    .set('*', resolve(''))
+    .set('Assets', resolve('src/assets'))
+
+    config.module
+      .rule("mjs")
+      .test(/\.mjs$/)
+      .type("javascript/auto")
+      .include.add(/node_modules/)
+        .end()
+
+    config.module
+      .rule('json5|yaml')
+      .test(/\.(json5?|ya?ml)$/)
+      .include.add(path.resolve(__dirname, 'src/lang'))
+        .end()
+      .use('vue-i18n')
+        .loader('@intlify/vue-i18n-loader')
+
+
+    config.plugin('webpackbar')
+      .use(WebpackBar, [{name: title}])
+  }
 }

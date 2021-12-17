@@ -44,12 +44,12 @@
           <el-dropdown-menu>
             <router-link to="/profile/">
               <el-dropdown-item>
-                {{ t("navbar.profile") }}
+                {{ t('navbar.profile') }}
               </el-dropdown-item>
             </router-link>
             <router-link to="/">
               <el-dropdown-item>
-                {{ t("navbar.dashboard") }}
+                {{ t('navbar.dashboard') }}
               </el-dropdown-item>
             </router-link>
             <a
@@ -57,7 +57,7 @@
               href="https://github.com/rcyj-FED/vue3-composition-admin"
             >
               <el-dropdown-item>
-                {{ t("navbar.github") }}
+                {{ t('navbar.github') }}
               </el-dropdown-item>
             </a>
             <a
@@ -71,7 +71,7 @@
               @click="logout"
             >
               <span style="display:block;">
-                {{ t("navbar.logOut") }}
+                {{ t('navbar.logOut') }}
               </span>
             </el-dropdown-item>
           </el-dropdown-menu>
@@ -81,7 +81,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import BreadCrumb from '@/components/bread-crumb/Index.vue'
 import Hamburger from '@/components/hamburger/Index.vue'
 import Screenfull from '@/components/screenfull/Index.vue'
@@ -90,10 +90,12 @@ import SizeSelect from '@/components/size_select/Index.vue'
 
 import { computed, reactive, toRefs } from 'vue'
 import { useStore } from '@/store'
-import { AppActionTypes } from '@/store/modules/app/action-types'
 import { useI18n } from 'vue-i18n'
 import { UserActionTypes } from '@/store/modules/user/action-types'
 import { useRoute, useRouter } from 'vue-router'
+
+import { useAppStore } from '@/stores/app'
+
 export default {
   components: {
     BreadCrumb,
@@ -116,10 +118,13 @@ export default {
     const avatar = computed(() => {
       return store.state.user.avatar
     })
+
+    const app = useAppStore()
+
+    const { toggleSideBar } = app
+
     const state = reactive({
-      toggleSideBar: () => {
-        store.dispatch(AppActionTypes.ACTION_TOGGLE_SIDEBAR, false)
-      },
+      toggleSideBar,
       logout: () => {
         useStore().dispatch(UserActionTypes.ACTION_LOGIN_OUT)
         router.push(`/login?redirect=${route.fullPath}`).catch(err => {

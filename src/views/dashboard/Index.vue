@@ -13,14 +13,7 @@
 
 <script lang="ts">
 import { useStore } from '@/store'
-import {
-  computed,
-  defineComponent,
-  onBeforeMount,
-  onMounted,
-  ref,
-  watchEffect
-} from 'vue'
+import { computed, defineComponent, onBeforeMount, onMounted, ref } from 'vue'
 import AdminDashboard from './admin/Index.vue'
 import EditorDashboard from './editor/Index.vue'
 import { usePageVisibility } from '@/utils/hooks'
@@ -40,7 +33,7 @@ export default defineComponent({
 
     const pageVisible = usePageVisibility()
 
-    const $bus = useEventEmitter()
+    const bus = useEventEmitter()
 
     onBeforeMount(() => {
       if (!roles.value.includes('admin')) {
@@ -49,23 +42,19 @@ export default defineComponent({
     })
 
     onMounted(() => {
-      $bus.useSubcription((val: any) => {
+      bus.useSubcription((val: any) => {
         console.log('recieved: ', val)
       })
 
       setTimeout(() => {
-        $bus.emit('hello vue3 hooks ')
+        bus.emit('hello vue3 hooks ')
       }, 3000)
-    })
-
-    watchEffect(() => {
-      console.log('visible', pageVisible.value)
     })
 
     return {
       currentRole,
       pageVisible,
-      $bus
+      bus
     }
   }
 })

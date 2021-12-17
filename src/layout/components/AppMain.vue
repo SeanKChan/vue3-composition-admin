@@ -33,6 +33,7 @@ export default defineComponent({
     const key = () => {
       return route.path
     }
+
     return {
       cachedViews,
       key
@@ -50,7 +51,7 @@ export default defineComponent({
   overflow: hidden;
 }
 
-.fixed-header+.app-main {
+.fixed-header + .app-main {
   padding-top: 50px;
   height: 100vh;
   overflow: auto;
@@ -62,7 +63,7 @@ export default defineComponent({
     min-height: calc(100vh - 84px);
   }
 
-  .fixed-header+.app-main {
+  .fixed-header + .app-main {
     padding-top: 84px;
   }
 }

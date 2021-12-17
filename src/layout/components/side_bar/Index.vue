@@ -63,8 +63,6 @@ export default defineComponent({
     })
 
     const menuActiveTextColor = computed(() => {
-      console.log(store.state.settings.sidebarTextTheme)
-
       if (store.state.settings.sidebarTextTheme) {
         return '#57CAEB'
         // return store.state.settings.theme

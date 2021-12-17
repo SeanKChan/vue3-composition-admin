@@ -23,7 +23,7 @@
       />
       <button
         class="destroy"
-        @click="deleteTodo( todo )"
+        @click="deleteTodo(todo)"
       />
     </div>
     <input
@@ -69,7 +69,6 @@ export default defineComponent({
   },
   emits: ['toggle-todo', 'edit-todo', 'delete-todo'],
   setup(props, { emit }) {
-    console.log(props, 'propspropsprops')
     const editing = ref(false)
     const deleteTodo = (todo: TodoItem) => {
       emit('delete-todo', todo)
