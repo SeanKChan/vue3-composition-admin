@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts">
-import { useStore } from '@/store'
+import { useUserStore } from '@/stores/user'
 import { computed, defineComponent } from 'vue'
 import PanThumb from '@/components/pan-thumb/Index.vue'
 import Mallki from '@/components/text-hover-effect/Mallki.vue'
@@ -62,16 +62,16 @@ export default defineComponent({
     Mallki
   },
   setup() {
-    const store = useStore()
+    const userStore = useUserStore()
     const name = computed(() => {
-      return store.state.user.name
+      return userStore.name
     })
 
     const avatar = computed(() => {
-      return store.state.user.avatar
+      return userStore.avatar
     })
     const roles = computed(() => {
-      return store.state.user.roles
+      return userStore.roles
     })
 
     return {
@@ -96,7 +96,7 @@ export default defineComponent({
   width: 70px!important;
   position: absolute!important;
   top: -45px;
-  left: 0px;
+  left: 0;
   border: 5px solid #ffffff;
   background-color: #fff;
   margin: auto;
@@ -128,8 +128,8 @@ export default defineComponent({
 
   .mallki-text {
     position: absolute;
-    top: 0px;
-    right: 0px;
+    top: 0;
+    right: 0;
     font-size: 20px;
     font-weight: bold;
   }

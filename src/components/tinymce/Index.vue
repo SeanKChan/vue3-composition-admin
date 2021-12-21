@@ -1,8 +1,8 @@
 <template>
   <div
     :class="{fullscreen: fullscreen}"
-    class="tinymce-container"
     :style="{width: containerWidth}"
+    class="tinymce-container"
   >
     <TinymceEditor
       :id="id"
@@ -68,18 +68,13 @@ import 'tinymce/plugins/wordcount'
 import TinymceEditor from '@tinymce/tinymce-vue' // TinyMCE vue wrapper
 import EditorImageUpload, { UploadObject } from './components/EditorImage.vue'
 import { plugins, toolbar } from './config'
-import {
-  defineComponent,
-  reactive,
-  toRefs,
-  watch,
-  nextTick,
-  ref,
-  computed
-} from 'vue'
-import { useStore } from '@/store'
+import { computed, defineComponent, nextTick, reactive, ref, toRefs, watch } from 'vue'
+import { useSettingsStore } from '@/stores/settings'
+import { useAppStore } from '@/stores/app'
+
 const defaultId = () =>
   'vue-tinymce-' + +new Date() + ((Math.random() * 1000).toFixed(0) + '')
+
 export default defineComponent({
   components: {
     TinymceEditor,
@@ -115,17 +110,16 @@ export default defineComponent({
   },
   emits: ['input'],
   setup(props, ctx) {
-    const store = useStore()
+    const settingsStore = useSettingsStore()
+    const appStore = useAppStore()
     const dataMap = reactive({
       hasChange: false,
       hasInit: false,
       fullscreen: true,
-      getlanguage: () => {
-        return store.state.app.language
-      },
       uploadButtonColor: () => {
-        return store.state.settings.theme
+        return settingsStore.theme
       },
+      getLanguage: computed(() => appStore.language),
       tinymceContent: computed(() => {
         return props.value
       }),
@@ -148,7 +142,7 @@ export default defineComponent({
         toolbar: props.toolbar.length > 0 ? props.toolbar : toolbar,
         menubar: props.menubar,
         plugins: plugins,
-        language_url: store.state.app.language === 'en' ? '' : `${process.env.BASE_URL}tinymce/langs/${store.state.app.language}.js`,
+        language_url: dataMap.getLanguage === 'en' ? '' : `${process.env.BASE_URL}tinymce/langs/${dataMap.getLanguage}.js`,
         language: 'zh_CN',
         skin_url: `${process.env.BASE_URL}tinymce/skins/`,
         emoticons_database_url: `${process.env.BASE_URL}tinymce/emojis.min.js`,
@@ -184,7 +178,7 @@ export default defineComponent({
       }
     )
 
-    watch(() => store.state.app.language, () => {
+    watch(() => dataMap.getLanguage, () => {
       const tinymceManager = (window as any).tinymce
       const tinymceInstance = tinymceManager.get(props.id)
       if (dataMap.fullscreen) {
@@ -208,7 +202,11 @@ export default defineComponent({
         tinymce.insertContent(`<img class="wscnph" src="${v.url}" >`)
       })
     }
-    return { ...toRefs(dataMap), imageSuccessCBK, initOptions }
+    return {
+      ...toRefs(dataMap),
+      imageSuccessCBK,
+      initOptions
+    }
   }
 })
 </script>
@@ -217,19 +215,23 @@ export default defineComponent({
 .tinymce-container {
   position: relative;
   line-height: normal;
+
   .mce-fullscreen {
     z-index: 10000;
   }
 }
+
 .editor-custom-btn-container {
   position: absolute !important;
   right: 6px;
   top: 6px;
   z-index: 1002;
 }
+
 .editor-upload-btn {
   display: inline-block;
 }
+
 textarea {
   visibility: hidden;
   z-index: -1;

@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { useStore } from '@/store'
+import { useUserStore } from '@/stores/user'
 import { computed, defineComponent, onBeforeMount, onMounted, ref } from 'vue'
 import AdminDashboard from './admin/Index.vue'
 import EditorDashboard from './editor/Index.vue'
@@ -25,10 +25,10 @@ export default defineComponent({
     EditorDashboard
   },
   setup() {
-    const store = useStore()
+    const userStore = useUserStore()
     const currentRole = ref('admin-dashboard')
     const roles = computed(() => {
-      return store.state.user.roles
+      return userStore.roles
     })
 
     const pageVisible = usePageVisibility()

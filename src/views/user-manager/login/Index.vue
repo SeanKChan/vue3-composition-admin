@@ -140,9 +140,9 @@ import LangSelect from '@/components/lang_select/Index.vue'
 import SocialSign from './components/SocialSignin.vue'
 import { isValidUsername } from '@/utils/validate'
 import { useRoute, LocationQuery, useRouter } from 'vue-router'
-import { useStore } from '@/store'
-import { UserActionTypes } from '@/store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
+import { useUserStore } from '@/stores/user'
+
 export default defineComponent({
   components: {
     LangSelect,
@@ -154,7 +154,7 @@ export default defineComponent({
     const loginFormRef = ref(null)
     const router = useRouter()
     const route = useRoute()
-    const store = useStore()
+    const userStore = useUserStore()
     const { t } = useI18n()
     const state = reactive({
       loginForm: {
@@ -207,7 +207,7 @@ export default defineComponent({
         (loginFormRef.value as any).validate(async (valid: boolean) => {
           if (valid) {
             state.loading = true
-            await store.dispatch(UserActionTypes.ACTION_LOGIN, state.loginForm)
+            await userStore.login(state.loginForm)
             router
               .push({
                 path: state.redirect || '/',

@@ -8,26 +8,27 @@
 
 <template>
   <div
-    class="handle-button"
     :style="{'top': buttonTop+'px','backgroundColor': theme}"
+    class="handle-button"
     @click="show= true"
   >
     <i class="el-icon-setting" />
   </div>
   <el-drawer
-    title="设置"
     v-model="show"
-    size="300px"
     :direction="direction"
     destroy-on-close
+    size="300px"
+    title="设置"
   >
     <slot />
   </el-drawer>
 </template>
 
 <script lang="ts">
-import { useStore } from '@/store'
 import { computed, defineComponent, ref } from 'vue'
+import { useSettingsStore } from '@/stores/settings'
+
 export default defineComponent({
   props: {
     buttonTop: {
@@ -37,9 +38,9 @@ export default defineComponent({
   },
   setup() {
     const show = ref(false)
-    const store = useStore()
+    const settingsStore = useSettingsStore()
     const theme = computed(() => {
-      return store.state.settings.theme
+      return settingsStore.theme
     })
     return {
       show,

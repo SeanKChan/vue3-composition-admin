@@ -18,18 +18,18 @@
   </div>
 </template>
 <script lang="ts">
-import { useStore } from '@/store'
-import { UserActionTypes } from '@/store/modules/user/action-types'
 import { computed, defineComponent, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useUserStore } from '@/stores/user'
+
 export default defineComponent({
   setup() {
     const { t } = useI18n()
-    const store = useStore()
-    const roles = computed(() => store.state.user.roles)
+    const userStore = useUserStore()
+    const roles = computed(() => userStore.roles)
     const currentRole = ref(roles.value[0])
     watch(currentRole, (value) => {
-      store.dispatch(UserActionTypes.ACTION_CHANGE_ROLES, value)
+      userStore.changeRoles(value)
     })
     return {
       t,

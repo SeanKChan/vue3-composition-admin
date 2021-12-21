@@ -3,8 +3,8 @@ import { reactive, toRefs } from 'vue'
 import { getToken, removeToken, setToken } from '@/utils/cookies'
 import { loginRequest, userInfoRequest } from '@/apis/user'
 import router, { resetRouter } from '@/router'
-import { RouteRecordRaw } from 'vue-router'
 import { usePermissionStore } from './permission'
+import { RouteRecordRaw } from 'vue-router'
 
 export interface UserState {
   token: string
@@ -66,9 +66,10 @@ export const useUserStore = defineStore('user', () => {
     state.token = token
     setToken(token)
     await getUserInfo()
-    const permission = usePermissionStore()
-    permission.setRoutes(state.roles)
-    permission.dynamicRoutes.forEach((item: RouteRecordRaw) => {
+    const permissionStore = usePermissionStore()
+    permissionStore.setRoutes(state.roles)
+    const dynamicRoutes = permissionStore.dynamicRoutes as RouteRecordRaw[]
+    dynamicRoutes.forEach((item: RouteRecordRaw) => {
       router.addRoute(item)
     })
   }

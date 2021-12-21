@@ -56,45 +56,42 @@
 </template>
 
 <script lang="ts">
-import { useStore } from '@/store'
-import { SettingsActionTypes } from '@/store/modules/settings/action-types'
 import { defineComponent, reactive, toRefs, watch } from 'vue'
 import ThemePicker from '@/components/theme-picker/Index.vue'
 import { useI18n } from 'vue-i18n'
+import { useSettingsStore } from '@/stores/settings'
 
 export default defineComponent({
   components: {
     ThemePicker
   },
   setup() {
-    const store = useStore()
+    const settingsStore = useSettingsStore()
     const { t } = useI18n()
     const state = reactive({
-      fixedHeader: store.state.settings.fixedHeader,
-      showTagsView: store.state.settings.showTagsView,
-      showSidebarLogo: store.state.settings.showSidebarLogo,
-      sidebarTextTheme: store.state.settings.sidebarTextTheme,
-      themeChange: (value: string) => {
-        store.dispatch(SettingsActionTypes.ACTION_CHANGE_SETTING, { key: 'theme', value })
+      fixedHeader: settingsStore.fixedHeader,
+      showTagsView: settingsStore.showTagsView,
+      showSidebarLogo: settingsStore.showSidebarLogo,
+      sidebarTextTheme: settingsStore.sidebarTextTheme,
+      themeChange: (v: string) => {
+        settingsStore.changeSettings('theme', v)
       }
     })
 
-    watch(() => state.fixedHeader, (value) => {
-      store.dispatch(SettingsActionTypes.ACTION_CHANGE_SETTING, { key: 'fixedHeader', value })
+    watch(() => state.fixedHeader, (v) => {
+      settingsStore.changeSettings('fixedHeader', v)
     })
 
-    watch(() => state.showTagsView, (value) => {
-      store.dispatch(SettingsActionTypes.ACTION_CHANGE_SETTING, { key: 'showTagsView', value })
+    watch(() => state.showTagsView, (v) => {
+      settingsStore.changeSettings('showTagsView', v)
     })
 
-    watch(() => state.showSidebarLogo, (value) => {
-      console.log(value)
-
-      store.dispatch(SettingsActionTypes.ACTION_CHANGE_SETTING, { key: 'showSidebarLogo', value })
+    watch(() => state.showSidebarLogo, (v) => {
+      settingsStore.changeSettings('showSidebarLogo', v)
     })
 
-    watch(() => state.sidebarTextTheme, (value) => {
-      store.dispatch(SettingsActionTypes.ACTION_CHANGE_SETTING, { key: 'sidebarTextTheme', value })
+    watch(() => state.sidebarTextTheme, (v) => {
+      settingsStore.changeSettings('sidebarTextTheme', v)
     })
 
     return {

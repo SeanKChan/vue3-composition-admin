@@ -105,6 +105,14 @@ export const useTagsViewStore = defineStore('tagViews', () => {
   }
 
   return {
-    ...toRefs(state)
+    ...toRefs(state),
+    addView,
+    addVisitedView,
+    delView,
+    delOtherViews,
+    delCachedView,
+    delAllViews,
+    delAllCachedViews,
+    updateVisitedView
   }
 })

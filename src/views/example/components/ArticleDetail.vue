@@ -7,8 +7,8 @@
       class="form-container"
     >
       <Sticky
-        :z-index="10"
         :class-name="'sub-navbar ' + postForm.status"
+        :z-index="10"
       >
         <CommentDropdown :value="postForm.disableComment" />
         <PlatformDropdown
@@ -16,8 +16,8 @@
           @formDropdown="formDropdown"
         />
         <SourceUrlDropdown
-          @inputUrl="inputUrl"
           :value="postForm.sourceURL"
+          @inputUrl="inputUrl"
         />
         <el-button
           v-loading="loading"
@@ -52,17 +52,17 @@
               <el-row>
                 <el-col :span="8">
                   <el-form-item
-                    label-width="60px"
-                    label="Author:"
                     class="postInfo-container-item"
+                    label="Author:"
+                    label-width="60px"
                   >
                     <el-select
                       v-model="postForm.author"
                       :remote-method="getRemoteUserList"
-                      filterable
                       default-first-option
-                      remote
+                      filterable
                       placeholder="Search user"
+                      remote
                     >
                       <el-option
                         v-for="(item, index) in userListOptions"
@@ -76,9 +76,9 @@
 
                 <el-col :span="10">
                   <el-form-item
-                    label-width="120px"
-                    label="Publish Time:"
                     class="postInfo-container-item"
+                    label="Publish Time:"
+                    label-width="120px"
                   >
                     <el-date-picker
                       v-model="value"
@@ -89,16 +89,16 @@
 
                 <el-col :span="6">
                   <el-form-item
-                    label-width="90px"
-                    label="Importance:"
                     class="postInfo-container-item"
+                    label="Importance:"
+                    label-width="90px"
                   >
                     <el-rate
                       v-model="postForm.importance"
-                      :max="3"
                       :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
-                      :low-threshold="1"
                       :high-threshold="3"
+                      :low-threshold="1"
+                      :max="3"
                       style="display: inline-block"
                     />
                   </el-form-item>
@@ -109,17 +109,17 @@
         </el-row>
 
         <el-form-item
-          style="margin-bottom: 40px"
-          label-width="70px"
           label="Summary:"
+          label-width="70px"
+          style="margin-bottom: 40px"
         >
           <el-input
             v-model="postForm.abstractContent"
             :rows="1"
-            type="textarea"
-            class="article-textarea"
             autosize
+            class="article-textarea"
             placeholder="Please enter the content"
+            type="textarea"
           />
           <span
             v-show="abstractContentLength"
@@ -133,8 +133,8 @@
         >
           <Tinymce
             ref="editor"
+            height="400"
             :value="postForm.fullContent"
-            :height="400"
           />
         </el-form-item>
       </div>
@@ -143,19 +143,9 @@
 </template>
 
 <script lang="ts">
-import {
-  reactive,
-  toRefs,
-  defineComponent,
-  onDeactivated,
-  onActivated,
-  onBeforeMount,
-  ref,
-  unref,
-  computed
-} from 'vue'
+import { computed, defineComponent, onActivated, onBeforeMount, onDeactivated, reactive, ref, toRefs, unref } from 'vue'
 import { isValidURL } from '@/utils/validate'
-import { getArticle, defaultArticleModel } from '@/apis/articles'
+import { defaultArticleModel, getArticle } from '@/apis/articles'
 import { getUsers } from '@/apis/user'
 import { TagView } from '@/store/modules/tagsview/state'
 import MaterialInput from '@/components/material-input/Index.vue'
@@ -163,15 +153,11 @@ import Sticky from '@/components/sticky/Index.vue'
 import Tinymce from '@/components/tinymce/Index.vue'
 // import UploadImage from '@/components/UploadImage/index.vue'
 import Warning from './Warning.vue'
-import {
-  CommentDropdown,
-  PlatformDropdown,
-  SourceUrlDropdown
-} from './Dropdown'
-import { ElMessage, ElForm } from 'element-plus'
-import { useRouter, useRoute } from 'vue-router'
-import { useStore } from '@/store'
-import { TagsActionTypes } from '@/store/modules/tagsview/action-types'
+import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
+import { ElForm, ElMessage } from 'element-plus'
+import { useRoute, useRouter } from 'vue-router'
+import { useTagsViewStore } from '@/stores/tagsView'
+import { useAppStore } from '@/stores/app'
 
 export default defineComponent({
   props: {
@@ -191,8 +177,9 @@ export default defineComponent({
     Warning
   },
 
-  setup(_, ctx) {
-    console.log(ctx)
+  setup(_) {
+    const tagsViewStore = useTagsViewStore()
+    const appStore = useAppStore()
     const postFormNode = ref(ElForm)
     const validateRequire = (rule: any, value: string, callback: Function) => {
       if (value === '') {
@@ -227,7 +214,6 @@ export default defineComponent({
         callback()
       }
     }
-    const store = useStore()
 
     const tempTagView: TagView = {}
     const route = useRoute()
@@ -242,7 +228,10 @@ export default defineComponent({
         imageURL: [{ validator: validateRequire }],
         title: [{ validator: validateRequire }],
         fullContent: [{ validator: validateRequire }],
-        sourceURL: [{ validator: validateSourceUrl, trigger: 'blur' }]
+        sourceURL: [{
+          validator: validateSourceUrl,
+          trigger: 'blur'
+        }]
       },
 
       tinymceActive: true,
@@ -250,7 +239,7 @@ export default defineComponent({
         return this.postForm.abstractContent.length
       },
       lang() {
-        return store.state.app.language
+        return appStore.language
       },
       formDropdown: (val: any) => {
         dataMap.postForm.platforms = val
@@ -277,7 +266,7 @@ export default defineComponent({
       if (tagView) {
         tagView.title = `${title}-${dataMap.postForm.id}`
         // TagsViewModule.updateVisitedView(tagView)
-        store.dispatch(TagsActionTypes.ACTION_UPDATE_VISITED_VIEW, tagView)
+        tagsViewStore.updateVisitedView(tagView)
       }
     }
     const fetchData = async (id: any) => {
@@ -290,14 +279,13 @@ export default defineComponent({
           dataMap.postForm.author = data.data.author
         }
 
-        console.log(dataMap.postForm, 'authorauthorauthorauthorauthor')
         dataMap.value = String(data?.data.timestamp)
 
         // Just for test
         dataMap.postForm.title += `   Article Id:${dataMap.postForm.id}`
         dataMap.postForm.abstractContent += `   Article Id:${dataMap.postForm.id}`
         const title = dataMap.lang() === 'zh' ? '编辑文章' : 'Edit Article'
-        // Set tagsview title
+        // Set tagsView title
         setTagsViewTitle(title)
         // Set page title
         setPageTitle(title)
@@ -331,7 +319,7 @@ export default defineComponent({
     const draftForm = () => {
       if (
         dataMap.postForm.fullContent.length === 0 ||
-        dataMap.postForm.title.length === 0
+          dataMap.postForm.title.length === 0
       ) {
         ElMessage.warning({
           message: 'Title and detail content are required',
@@ -400,7 +388,7 @@ export default defineComponent({
     padding-right: 40px;
     resize: none;
     border: none;
-    border-radius: 0px;
+    border-radius: 0;
     border-bottom: 1px solid #bfcbd9;
   }
 }
@@ -429,7 +417,7 @@ export default defineComponent({
     width: 40px;
     position: absolute;
     right: 10px;
-    top: 0px;
+    top: 0;
   }
 }
 </style>

@@ -48,18 +48,20 @@
 </template>
 
 <script lang="ts">
-import { useStore } from '@/store'
-import { reactive, defineComponent, toRefs, onMounted } from 'vue'
+import { useUserStore } from '@/stores/user'
+import { defineComponent, onMounted, reactive, toRefs } from 'vue'
 import Account from './components/Account.vue'
 import Activity from './components/Activity.vue'
 import Timeline from './components/Timeline.vue'
 import UserCard from './components/UserCard.vue'
- interface Profile {
+
+interface Profile {
   name: string
   email: string
   avatar: string
   roles: string
 }
+
 export default defineComponent({
   components: {
     Account,
@@ -74,24 +76,24 @@ export default defineComponent({
       avatar: 'Loading...',
       roles: 'Loading...'
     }
-    const store = useStore()
+    const userStore = useUserStore()
     const dataMap = reactive({
 
       user: defaultProfile,
       activeTab: 'activity',
 
       name: () => {
-        return store.state.user.name
+        return userStore.name
       },
 
       email() {
-        return store.state.user.email
+        return userStore.email
       },
       avatar() {
-        return store.state.user.avatar
+        return userStore.avatar
       },
       roles() {
-        return store.state.user.roles
+        return userStore.roles
       },
       getUser: () => {
         dataMap.user = {

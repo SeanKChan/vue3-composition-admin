@@ -19,17 +19,15 @@
 </template>
 
 <script lang="ts">
-import { useStore } from '@/store'
-import { defineComponent } from 'vue'
+import { useTagsViewStore } from '@/stores/tagsView'
+import { computed, defineComponent } from 'vue'
 import { useRoute } from 'vue-router'
 
 export default defineComponent({
   setup() {
-    const store = useStore()
+    const tagsViewStore = useTagsViewStore()
     const route = useRoute()
-    const cachedViews = () => {
-      return store.state.tagViews.cachedViews
-    }
+    const cachedViews = computed(() => tagsViewStore.cachedViews)
     const key = () => {
       return route.path
     }

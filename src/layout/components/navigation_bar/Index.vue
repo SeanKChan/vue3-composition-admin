@@ -53,16 +53,16 @@
               </el-dropdown-item>
             </router-link>
             <a
-              target="_blank"
               href="https://github.com/rcyj-FED/vue3-composition-admin"
+              target="_blank"
             >
               <el-dropdown-item>
                 {{ t('navbar.github') }}
               </el-dropdown-item>
             </a>
             <a
-              target="_blank"
               href="https://armour.github.io/vue-typescript-admin-docs/"
+              target="_blank"
             >
               <el-dropdown-item>Docs</el-dropdown-item>
             </a>
@@ -89,11 +89,10 @@ import LangSelect from '@/components/lang_select/Index.vue'
 import SizeSelect from '@/components/size_select/Index.vue'
 
 import { computed, reactive, toRefs } from 'vue'
-import { useStore } from '@/store'
 import { useI18n } from 'vue-i18n'
-import { UserActionTypes } from '@/store/modules/user/action-types'
 import { useRoute, useRouter } from 'vue-router'
 
+import { useUserStore } from '@/stores/user'
 import { useAppStore } from '@/stores/app'
 
 export default {
@@ -105,18 +104,20 @@ export default {
     SizeSelect
   },
   setup() {
-    const store = useStore()
+    const userStore = useUserStore()
+    const appStore = useAppStore()
+
     const route = useRoute()
     const router = useRouter()
     const { t } = useI18n()
     const sidebar = computed(() => {
-      return store.state.app.sidebar
+      return appStore.sidebar
     })
     const device = computed(() => {
-      return store.state.app.device.toString()
+      return appStore.device.toString()
     })
     const avatar = computed(() => {
-      return store.state.user.avatar
+      return userStore.avatar
     })
 
     const app = useAppStore()
@@ -126,7 +127,7 @@ export default {
     const state = reactive({
       toggleSideBar,
       logout: () => {
-        useStore().dispatch(UserActionTypes.ACTION_LOGIN_OUT)
+        userStore.logout()
         router.push(`/login?redirect=${route.fullPath}`).catch(err => {
           console.warn(err)
         })

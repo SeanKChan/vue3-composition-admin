@@ -16,10 +16,11 @@
 </template>
 
 <script lang="ts">
-import { useStore } from '@/store'
 import { computed, defineComponent, getCurrentInstance, reactive, toRefs, watch } from 'vue'
 import Loading from '@/utils/loading'
 import { useI18n } from 'vue-i18n'
+import { useSettingsStore } from '@/stores/settings'
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const version = require('element-plus/package.json').version // element-ui version from node_modules
 const ORIGINAL_THEME = '#409EFF' // default color
@@ -28,16 +29,16 @@ export default defineComponent({
   emits: ['change'],
   setup(_, context) {
     const { loading } = Loading()
-    const store = useStore()
+    const settingsStore = useSettingsStore()
     const { t } = useI18n()
     const ctx = getCurrentInstance() as any
     const state = reactive({
       chalk: '',
-      theme: store.state.settings.theme
+      theme: settingsStore.theme
     })
 
     const defaultTheme = computed(() => {
-      return store.state.settings.theme
+      return settingsStore.theme
     })
 
     watch(defaultTheme, (value: string) => {

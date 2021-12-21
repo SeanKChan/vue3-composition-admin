@@ -39,7 +39,7 @@
 import { computed, defineComponent } from 'vue'
 import PanThumb from '@/components/pan-thumb/Index.vue'
 import GithubCorner from '@/components/github-corner/Index.vue'
-import { useStore } from '@/store'
+import { useUserStore } from '@/stores/user'
 export default defineComponent({
   components: {
     PanThumb,
@@ -47,15 +47,15 @@ export default defineComponent({
   },
   setup() {
     const emptyGif = 'https://wpimg.wallstcn.com/0e03b7da-db9e-4819-ba10-9016ddfdaed3'
-    const store = useStore()
+    const userStore = useUserStore()
     const name = computed(() => {
-      return store.state.user.name
+      return userStore.name
     })
     const avatar = computed(() => {
-      return store.state.user.avatar
+      return userStore.avatar
     })
     const roles = computed(() => {
-      return store.state.user.roles
+      return userStore.roles
     })
 
     return {

@@ -6,14 +6,16 @@
  * @LastEditTime: 2021-01-25 20:01:32
  */
 
-import { useStore } from '@/store'
 import HttpClient, { HttpClientConfig } from 'axios-mapper'
 import networkConfig from '@/config/default/net.config'
+import { useUserStore } from '@/stores/user'
+
 const https = (hasToken: Boolean = true) => {
+  const userStore = useUserStore()
   const config: HttpClientConfig = {
     baseURL: networkConfig.host,
     headers: {
-      token: hasToken ? useStore()?.state.user.token : ''
+      token: hasToken ? userStore.token : ''
     }
   }
   return new HttpClient(config)

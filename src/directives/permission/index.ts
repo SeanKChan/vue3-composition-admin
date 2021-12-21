@@ -5,13 +5,14 @@
  * @LastEditors: ZY
  * @LastEditTime: 2020-12-28 13:46:23
  */
-import { useStore } from '@/store'
+import { useUserStore } from '@/stores/user'
 import { Directive } from 'vue'
 
 export const permission: Directive = {
   mounted(el, binding) {
+    const userStore = useUserStore()
     const { value } = binding
-    const roles = useStore().state.user.roles
+    const roles = userStore.roles
     if (value && value instanceof Array && value.length > 0) {
       const permissionRoles = value
       const hasPermission = roles.some((role: any) => {

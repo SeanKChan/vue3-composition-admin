@@ -16,20 +16,20 @@
     />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
-        :collapse="!isCollapse"
-        :unique-opened="false"
-        :default-active="activeMenu"
-        :background-color="variables.menuBg"
-        :text-color="variables.menuText"
         :active-text-color="menuActiveTextColor"
+        :background-color="variables.menuBg"
+        :collapse="!isCollapse"
+        :default-active="activeMenu"
+        :text-color="variables.menuText"
+        :unique-opened="false"
         mode="vertical"
       >
         <SidebarItem
           v-for="route in routes"
           :key="route.path"
-          :item="route"
           :base-path="route.path"
           :is-collapse="isCollapse"
+          :item="route"
         />
       </el-menu>
     </el-scrollbar>
@@ -41,7 +41,9 @@ import { computed, defineComponent } from 'vue'
 import SidebarItem from './SidebarItem.vue'
 import SidebarLogo from './SidebarLogo.vue'
 import variables from '@/styles/_variables.scss'
-import { useStore } from '@/store'
+import { useAppStore } from '@/stores/app'
+import { usePermissionStore } from '@/stores/permission'
+import { useSettingsStore } from '@/stores/settings'
 import { useRoute } from 'vue-router'
 
 export default defineComponent({
@@ -50,20 +52,22 @@ export default defineComponent({
     SidebarLogo
   },
   setup() {
-    const store = useStore()
+    const appStore = useAppStore()
+    const permissionStore = usePermissionStore()
+    const settingsStore = useSettingsStore()
     const route = useRoute()
     const sidebar = computed(() => {
-      return store.state.app.sidebar
+      return appStore.sidebar
     })
     const routes = computed(() => {
-      return store.state.permission.routes
+      return permissionStore.routes
     })
     const showLogo = computed(() => {
-      return store.state.settings.showSidebarLogo
+      return settingsStore.showSidebarLogo
     })
 
     const menuActiveTextColor = computed(() => {
-      if (store.state.settings.sidebarTextTheme) {
+      if (settingsStore.sidebarTextTheme) {
         return '#57CAEB'
         // return store.state.settings.theme
       } else {
@@ -72,11 +76,12 @@ export default defineComponent({
     })
 
     const activeMenu = computed(() => {
-      const { meta, path } = route
-      if (meta !== null || meta !== undefined) {
-        if (meta.activeMenu) {
-          return meta.activeMenu
-        }
+      const {
+        meta,
+        path
+      } = route
+      if (meta.activeMenu) {
+        return meta.activeMenu
       }
       return path
     })
@@ -103,7 +108,7 @@ export default defineComponent({
   // reset element-ui css
   .horizontal-collapse-transition {
     transition: 0s width ease-in-out, 0s padding-left ease-in-out,
-      0s padding-right ease-in-out;
+    0s padding-right ease-in-out;
   }
 
   .scrollbar-wrapper {
@@ -116,7 +121,7 @@ export default defineComponent({
 
   .el-scrollbar__bar {
     &.is-vertical {
-      right: 0px;
+      right: 0;
     }
 
     &.is-horizontal {
