@@ -7,10 +7,9 @@
  */
 // refer to Bootstrap's responsive design
 
-import { DeviceType } from '@/store/modules/app/state'
 import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { useAppStore } from '@/stores/app'
+import { useAppStore, DeviceType } from '@/stores/app'
 import { createPinia } from 'pinia'
 
 const pinia = createPinia()

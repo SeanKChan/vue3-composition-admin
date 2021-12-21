@@ -147,7 +147,6 @@ import { computed, defineComponent, onActivated, onBeforeMount, onDeactivated, r
 import { isValidURL } from '@/utils/validate'
 import { defaultArticleModel, getArticle } from '@/apis/articles'
 import { getUsers } from '@/apis/user'
-import { TagView } from '@/store/modules/tagsview/state'
 import MaterialInput from '@/components/material-input/Index.vue'
 import Sticky from '@/components/sticky/Index.vue'
 import Tinymce from '@/components/tinymce/Index.vue'
@@ -156,7 +155,7 @@ import Warning from './Warning.vue'
 import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
 import { ElForm, ElMessage } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
-import { useTagsViewStore } from '@/stores/tagsView'
+import { useTagsViewStore, TagView } from '@/stores/tagsView'
 import { useAppStore } from '@/stores/app'
 
 export default defineComponent({

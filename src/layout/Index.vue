@@ -33,13 +33,12 @@
 </template>
 
 <script lang="ts">
-import { DeviceType } from '@/store/modules/app/state'
 import { computed, defineComponent, onBeforeMount, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
 import RightPanel from '@/components/right_panel/Index.vue'
 import resize from './resize'
-import { useAppStore } from '@/stores/app'
+import { useAppStore, DeviceType } from '@/stores/app'
 import { useSettingsStore } from '@/stores/settings'
 
 export default defineComponent({

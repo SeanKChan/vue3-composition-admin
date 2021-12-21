@@ -25,6 +25,7 @@ export default {
     dropzone: 'Dropzone',
     sticky: 'Sticky',
     countTo: 'Count To',
+    hooksDemo: 'Hooks Demo',
     componentMixin: 'Mixin',
     backToTop: 'Back To Top',
     draggableDialog: 'Draggable Dialog',

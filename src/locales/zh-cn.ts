@@ -25,6 +25,7 @@ export default {
     dropzone: 'Dropzone',
     sticky: 'Sticky',
     countTo: 'Count To',
+    hooksDemo: 'Hooks Demo',
     componentMixin: '小组件',
     backToTop: '返回顶部',
     draggableDialog: '可拖拽对话框',

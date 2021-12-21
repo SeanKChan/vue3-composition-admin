@@ -15,12 +15,7 @@ function useEventListener(eventName: string, handler: Function, options: Options
   once: false,
   passive: false
 }) {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const targetElement = getTargetElement(options.target, window)!
   const handlerRef = ref(handler)
-  if (!targetElement.addEventListener) {
-    return
-  }
 
   const eventListener = (
     event: Event
@@ -29,6 +24,11 @@ function useEventListener(eventName: string, handler: Function, options: Options
   }
 
   onMounted(() => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const targetElement = getTargetElement(options.target, window)!
+    if (!targetElement.addEventListener) {
+      return
+    }
     targetElement.addEventListener(eventName, eventListener, {
       capture: options.capture,
       once: options.once,
@@ -37,6 +37,11 @@ function useEventListener(eventName: string, handler: Function, options: Options
   })
 
   onUnmounted(() => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const targetElement = getTargetElement(options.target, window)!
+    if (!targetElement.removeEventListener) {
+      return
+    }
     targetElement.removeEventListener(eventName, eventListener, {
       capture: options.capture
     })

@@ -16,7 +16,7 @@
       </a>
     </aside>
     <CountTo
-      ref="count"
+      ref="countTo"
       :start-val="startVal"
       :end-val="endVal"
       :duration="duration"
@@ -125,7 +125,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, getCurrentInstance, reactive, ref, toRefs } from 'vue'
+import { computed, defineComponent, reactive, ref, toRefs } from 'vue'
 import { CountTo } from 'vue3-count-to'
 
 export default defineComponent({
@@ -133,7 +133,6 @@ export default defineComponent({
     CountTo
   },
   setup() {
-    const { ctx } = getCurrentInstance() as any
     const state = reactive({
       setStartVal: 0,
       setEndVal: 2017,
@@ -185,13 +184,12 @@ export default defineComponent({
     const prefix = computed(() => {
       return state.setPrefix
     })
-    const countRef = ref(null)
+    const countTo = ref(null)
     const startCount = () => {
-      console.log(ctx.$refs)
-      // ctx.$refs.count && (ctx.$refs.count as any).start()
+      (countTo.value as any).start()
     }
     const pauseResume = () => {
-      // countRef.value && (countRef.value as any).pauseResume()
+      (countTo.value as any).pauseResume()
     }
     return {
       startVal,
@@ -201,7 +199,7 @@ export default defineComponent({
       separator,
       suffix,
       prefix,
-      countRef,
+      countTo,
       startCount,
       pauseResume,
       ...state,

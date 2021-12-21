@@ -1,5 +1,5 @@
 /* eslint no-return-assign: off */
-import { ref, onMounted, onUnmounted, nextTick, computed, Ref, watch } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, Ref, watch } from 'vue'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import useEventListener from './useEventListener'
@@ -16,7 +16,13 @@ export function useCounter(initialValue = 0) {
     initialValue = val // eslint-disable-line no-param-reassign
     return set(val)
   }
-  const actions = { inc, dec, get, set, reset }
+  const actions = {
+    inc,
+    dec,
+    get,
+    set,
+    reset
+  }
 
   return [count, actions] as const
 }
@@ -93,7 +99,12 @@ export function useWindowSize() {
     window.removeEventListener('resize', update)
   })
 
-  return { width, height, widthPixel, heightPixel }
+  return {
+    width,
+    height,
+    widthPixel,
+    heightPixel
+  }
 }
 
 export function usePrevious<T>(state: Ref<T> | (() => T)) {
@@ -116,4 +127,26 @@ export function usePageVisibility() {
   useEventListener('visibilitychange', cb)
 
   return visible
+}
+
+export function useMousePosition() {
+  const x = ref(0)
+  const y = ref(0)
+  const updateMouse = (e: MouseEvent) => {
+    x.value = e.pageX
+    y.value = e.pageY
+  }
+  // 鼠标点击时执行updateMouse函数
+  onMounted(() => {
+    document.addEventListener('click', updateMouse)
+  })
+  // 鼠标点击结束后对当前点击事件执行销毁操作
+  onUnmounted(() => {
+    document.removeEventListener('click', updateMouse)
+  })
+  // 返回x和y的值
+  return {
+    x,
+    y
+  }
 }

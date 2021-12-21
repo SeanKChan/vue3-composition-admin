@@ -74,6 +74,18 @@ const componentsRouter: Array<RouteRecordRaw> = [
         }
       },
       {
+        path: 'hooks-demo',
+        component: () =>
+          import(
+            /* webpackChunkName: "HooksDemo" */ '@/views/components-demo/HooksDemo.vue'
+          ),
+        name: 'HooksDemo',
+        meta: {
+          title: 'hooksDemo',
+          noCache: true
+        }
+      },
+      {
         path: 'sticky',
         component: () =>
           import(
