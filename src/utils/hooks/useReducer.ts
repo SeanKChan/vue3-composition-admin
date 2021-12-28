@@ -10,7 +10,8 @@ import { ref } from 'vue'
 
 export interface IAction {
   type: string
-  payload: any
+  payload?: any
+  [key: string]: any
 }
 
 export function useReducer(reducer: Function, initialState = {}) {

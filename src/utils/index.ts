@@ -97,3 +97,7 @@ export const toggleClass = (ele: HTMLElement, className: string) => {
   }
   ele.className = classString
 }
+
+export function isFunction(value: Function) {
+  return typeof value === 'function'
+}
