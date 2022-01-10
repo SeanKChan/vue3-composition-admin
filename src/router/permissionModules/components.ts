@@ -144,6 +144,18 @@ const componentsRouter: Array<RouteRecordRaw> = [
           title: 'draggableSelect',
           noCache: true
         }
+      },
+      {
+        path: 'amp',
+        component: () =>
+          import(
+            /* webpackChunkName: "CountTo" */ '@/views/components-demo/AMapDemo.vue'
+          ),
+        name: 'AMapDemo',
+        meta: {
+          title: 'aMapDemo',
+          noCache: true
+        }
       }
     ]
   }

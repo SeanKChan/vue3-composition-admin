@@ -32,6 +32,7 @@ export default {
     draggableKanban: 'Draggable Kanban',
     draggableList: 'Draggable List',
     draggableSelect: 'Draggable Select',
+    aMapDemo: 'AMapDemo',
     charts: 'Charts',
     barChart: 'Bar Chart',
     lineChart: 'Line Chart',

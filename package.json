@@ -64,6 +64,7 @@
     "xlsx": "^0.16.9"
   },
   "devDependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
     "@types/clipboard": "^2.0.1",
     "@types/faker": "^5.1.5",
     "@types/file-saver": "^2.0.1",
