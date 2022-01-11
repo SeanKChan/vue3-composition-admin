@@ -30,13 +30,14 @@ export const ResultHandler: MiddleWare = () => async (ctx, next) => {
     log.error('xxx'+err.statusCode);
     r.code = err.statusCode
     switch (err.statusCode) {
-      case 102:
-        r.msg = "用户不存在";
+      case 401:
+        r.msg = "用户不存在"
+        r.code = 401000
         break;
     
       default:
         break;
     }
   }
-  ctx.body = r;
+  ctx.body = r
 };

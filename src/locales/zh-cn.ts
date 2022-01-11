@@ -33,6 +33,7 @@ export default {
     draggableList: '可拖拽列表',
     draggableSelect: '可拖拽选择',
     aMapDemo: '高德地图Demo',
+    draggableDemo: '托拉拽组件Demo',
     charts: '图表',
     barChart: '柱状图表',
     lineChart: '折线图',

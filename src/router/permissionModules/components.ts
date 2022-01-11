@@ -149,11 +149,23 @@ const componentsRouter: Array<RouteRecordRaw> = [
         path: 'amp',
         component: () =>
           import(
-            /* webpackChunkName: "CountTo" */ '@/views/components-demo/AMapDemo.vue'
+            /* webpackChunkName: "AMapDemo" */ '@/views/components-demo/AMapDemo.vue'
           ),
         name: 'AMapDemo',
         meta: {
           title: 'aMapDemo',
+          noCache: true
+        }
+      },
+      {
+        path: 'draggableDemo',
+        component: () =>
+          import(
+            /* webpackChunkName: "DraggableDemo" */ '@/views/components-demo/DraggableDemo.vue'
+          ),
+        name: 'DraggableDemo',
+        meta: {
+          title: 'draggableDemo',
           noCache: true
         }
       }

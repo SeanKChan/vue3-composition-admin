@@ -33,6 +33,7 @@ export default {
     draggableList: 'Draggable List',
     draggableSelect: 'Draggable Select',
     aMapDemo: 'AMapDemo',
+    draggableDemo: 'draggableDemo',
     charts: 'Charts',
     barChart: 'Bar Chart',
     lineChart: 'Line Chart',

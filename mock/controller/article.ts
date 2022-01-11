@@ -83,7 +83,7 @@ export default class Article {
     }
     return {
       code: 70001,
-      message: 'Article not found'
+      msg: 'Article not found'
     }
   }
 
@@ -91,10 +91,7 @@ export default class Article {
   createArticle(ctx: any) {
     const { article } = ctx.request.body
     return {
-      code: 20000,
-      data: {
         article
-      }
     }
   }
   @post('/updateArticle')
@@ -108,16 +105,14 @@ export default class Article {
     }
     return {
       code: 70001,
-      message: 'Article not found'
+      msg: 'Article not found'
     }
   }
 
   @post('/deleteArticle')
   deleteArticle(ctx: any) {
     console.log(ctx)
-    return {
-      code: 20000
-    }
+    return {}
   }
 
 
@@ -126,17 +121,12 @@ export default class Article {
   getPageviews(ctx: any) {
     console.log(ctx)
     return {
-      code: 20000,
-      data: {
         pageviews: [
           { key: 'PC', pageviews: 1024 },
           { key: 'Mobile', pageviews: 1024 },
           { key: 'iOS', pageviews: 1024 },
           { key: 'Android', pageviews: 1024 }
         ]
-      }
     }
   }
-
-
 }

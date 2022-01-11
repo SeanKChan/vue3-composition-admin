@@ -22,7 +22,10 @@ export default class User {
       }
     }
   }
-  return ctx.throw(401);
+  return {
+   code: 401000,
+   msg: '账户不存在'
+   }
  }
 
  @get('/userInfo')
@@ -39,10 +42,7 @@ export default class User {
     return !(name && lowerCaseName.indexOf((name as string).toLowerCase()) < 0)
   })
   return{
-    code: 20000,
-    data: {
       items: users
-    }
   }
  }
 }
