@@ -2,21 +2,21 @@
   <div class="components-container">
     <div class="parent">
       <Vue3DraggableResizable
-        :initW="110"
-        :initH="120"
+        v-model:active="active"
+        v-model:h="h"
+        v-model:w="w"
         v-model:x="x"
         v-model:y="y"
-        v-model:w="w"
-        v-model:h="h"
-        v-model:active="active"
         :draggable="true"
+        :initH="120"
+        :initW="110"
         :resizable="true"
         @activated="print('activated')"
         @deactivated="print('deactivated')"
-        @drag-start="print('drag-start')"
-        @resize-start="print('resize-start')"
         @dragging="print('dragging')"
         @resizing="print('resizing')"
+        @drag-start="print('drag-start')"
+        @resize-start="print('resize-start')"
         @drag-end="print('drag-end')"
         @resize-end="print('resize-end')"
       >
@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs, reactive } from 'vue'
+import { defineComponent, reactive, toRefs } from 'vue'
 import Vue3DraggableResizable from 'vue3-draggable-resizable'
 import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'
 
@@ -47,6 +47,7 @@ export default defineComponent({
     const print = (val: any) => {
       console.info(val)
     }
+
     return {
       ...toRefs(state),
       print

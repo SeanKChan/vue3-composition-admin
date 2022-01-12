@@ -1,12 +1,11 @@
-import Axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
+import Axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import networkConfig from '@/config/default/net.config'
 import { useUserStore } from '@/stores/user'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { RootObject } from '@/model/rootObject'
-import { useStorage } from '@vueuse/core'
-import { stat } from 'fs'
+import { useAxios } from '@vueuse/integrations/useAxios'
 
-const service = Axios.create({
+const request = Axios.create({
   baseURL: networkConfig.host,
   timeout: networkConfig.timeout
 })
@@ -30,7 +29,7 @@ const codeMessage = {
 }
 
 // Request interceptors
-service.interceptors.request.use(
+request.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     const userStore = useUserStore()
     // Add X-Access-Token header to every request, you can add other custom headers here
@@ -45,7 +44,7 @@ service.interceptors.request.use(
 )
 
 // Response interceptors
-service.interceptors.response.use(
+request.interceptors.response.use(
   (response: AxiosResponse) => {
     // Some example codes here:
     // code == 0: success
@@ -86,7 +85,7 @@ service.interceptors.response.use(
     let errorText = error.message || 'error'
     if (Axios.isAxiosError(error)) {
       if (error.response) {
-        const { status, statusText } = error?.response
+        const { status, statusText } = error.response
         errorText = codeMessage[status] || statusText
       }
     }
@@ -99,4 +98,8 @@ service.interceptors.response.use(
   }
 )
 
-export default service
+export function useRequest<T>(url: string, config: AxiosRequestConfig) {
+  return useAxios<T>(url, config, request)
+}
+
+export default request
