@@ -34,12 +34,12 @@
             <use :xlink:href="theOnlyOneChild.meta.icon" />
           </svg>
           <span v-if="theOnlyOneChild.meta.title">{{
-            t("route." + theOnlyOneChild.meta.title)
+            t('route.' + theOnlyOneChild.meta.title)
           }}</span>
         </el-menu-item>
       </SidebarItemLink>
     </template>
-    <el-submenu
+    <el-sub-menu
       v-else
       :index="resolvePath(item.path)"
     >
@@ -54,7 +54,7 @@
           <use :xlink:href="item.meta.icon" />
         </svg>
         <span v-if="item.meta && item.meta.title">{{
-          t("route." + item.meta.title)
+          t('route.' + item.meta.title)
         }}</span>
       </template>
       <template v-if="item.children">
@@ -68,7 +68,7 @@
           class="nest-menu"
         />
       </template>
-    </el-submenu>
+    </el-sub-menu>
   </div>
 </template>
 
@@ -112,7 +112,7 @@ export default defineComponent({
 
     const showingChildNumber = computed(() => {
       if (props.item.children) {
-        const showingChildren = props.item.children.filter((item) => {
+        const showingChildren = props.item.children.filter(item => {
           if (item.meta && item.meta.hidden) {
             return false
           } else {
@@ -177,8 +177,8 @@ export default defineComponent({
       background-color: $subMenuHover !important;
     }
   }
-  .el-menu-item{
-    &>span{
+  .el-menu-item {
+    & > span {
       display: inline-block;
       padding-left: 5px;
     }
@@ -192,8 +192,7 @@ export default defineComponent({
       }
 
       & > span {
-             padding-left: 5px;
-
+        padding-left: 5px;
       }
     }
   }

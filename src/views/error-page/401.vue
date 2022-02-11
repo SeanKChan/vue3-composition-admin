@@ -38,7 +38,7 @@
           <li>
             <a
               href="#"
-              @click.prevent="dialogVisible=true"
+              @click.prevent="dialogVisible = true"
             >点我看图</a>
           </li>
         </ul>
@@ -76,7 +76,8 @@ export default defineComponent({
 
     const data = reactive({
       errGif: errGif + '?' + +new Date(),
-      ewizardClap: 'https://wpimg.wallstcn.com/007ef517-bafd-4066-aae4-6883632d9646',
+      ewizardClap:
+        'https://wpimg.wallstcn.com/007ef517-bafd-4066-aae4-6883632d9646',
       dialogVisible: false,
       back() {
         if (route.query.noGoBack) {
@@ -92,7 +93,6 @@ export default defineComponent({
     return { ...toRefs(data) }
   }
 })
-
 </script>
 
 <style lang="scss" scoped>
@@ -104,7 +104,7 @@ export default defineComponent({
   .back-btn {
     background: #008489;
     color: #fff;
-    border: none!important;
+    border: none !important;
   }
 
   .some-gif {
