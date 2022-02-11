@@ -1,3 +1,4 @@
+import { variables } from '@/styles/_variables.scss'
 /*
  * @Description: element 组件
  * @Author: ZY
@@ -37,7 +38,6 @@
  *  3.放开babel.config 注释
  */
 import ElementPlus from 'element-plus'
-import 'element-plus/lib/theme-chalk/index.css'
 import i18n from '@/locales'
 import { createPinia } from 'pinia'
 import { useAppStore } from '@/stores/app'

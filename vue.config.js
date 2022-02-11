@@ -32,10 +32,19 @@ module.exports = {
     open: true,
     noInfo: true,
     overlay: {
-      warnings: true,
+      warnings: false,
       errors: true,
     },
   },
+  // css: {
+  //   loaderOptions: {
+  //     scss: {
+  //       prependData: `
+  //          @import "@style/element-variables.scss";
+  //       `,
+  //     },
+  //   },
+  // },
   pluginOptions: {
     'style-resources-loader': {
       preProcessor: 'scss',
@@ -53,7 +62,7 @@ module.exports = {
 
     config.module
       .rule("mjs")
-      .test(/\.mjs$/)
+      .test(/\.mjs$/i)
       .type("javascript/auto")
       .include.add(/node_modules/)
         .end()

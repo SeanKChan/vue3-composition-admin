@@ -10,6 +10,7 @@
     ref="scrollContainerRef"
     :vertical="false"
     class="scroll-container"
+    @scroll="emitScroll"
     @wheel.prevent="handleScroll"
   >
     <slot />
@@ -17,13 +18,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, toRefs, computed, onMounted, onBeforeUnmount, getCurrentInstance } from 'vue'
+import { defineComponent, reactive, ref, toRefs, computed, getCurrentInstance } from 'vue'
+import type { ElScrollbar } from 'element-plus'
+
 export default defineComponent({
   emits: ['scroll'],
   setup(_, context) {
-    const scrollContainerRef = ref(null)
+    const scrollContainerRef = ref<InstanceType<typeof ElScrollbar>>()
     const scrollWrapper = computed(() => {
-      return (scrollContainerRef.value as any).$refs.wrap as HTMLElement
+      return (scrollContainerRef.value as any).$refs.wrap$ as HTMLElement
     })
     const { ctx } = getCurrentInstance() as any
     const tagSpacing = 4
@@ -73,17 +76,10 @@ export default defineComponent({
       context.emit('scroll')
     }
 
-    onMounted(() => {
-      scrollWrapper.value.addEventListener('scroll', emitScroll, true)
-    })
-
-    onBeforeUnmount(() => {
-      scrollWrapper.value.removeEventListener('scroll', emitScroll)
-    })
-
     return {
       scrollContainerRef,
-      ...toRefs(state)
+      ...toRefs(state),
+      emitScroll
     }
   }
 
@@ -91,7 +87,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-
 .scroll-container {
   .el-scrollbar__bar {
     bottom: 0px;

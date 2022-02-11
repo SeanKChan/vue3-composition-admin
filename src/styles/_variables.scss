@@ -10,8 +10,10 @@ $tiffany: #4AB7BD;
 $yellow:#FEC171;
 $panGreen: #30B08F;
 
+$color-primary: #1890ff;
+
 // Sidebar
-$sideBarWidth:300px;
+$sideBarWidth: 300px;
 $subMenuBg:#1f2d3d;
 $subMenuHover:#001528;
 $subMenuActiveText:#f4f4f5;
@@ -31,4 +33,5 @@ $loginCursorColor: #fff;
   menuBg: $menuBg;
   menuText: $menuText;
   menuActiveText: $menuActiveText;
+  theme: $color-primary
 }

@@ -9,6 +9,7 @@ export interface ScssVariables {
   menuBg: string
   menuText: string
   menuActiveText: string
+  theme: string
 }
 
 export const variables: IScssVariables
