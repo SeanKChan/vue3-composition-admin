@@ -24,7 +24,7 @@
         label="Date"
       >
         <template #default="{row}">
-          <span>{{ row.timestamp }}</span>
+          <span>{{ formatTime(row.timestamp) }}</span>
         </template>
       </el-table-column>
 
@@ -58,7 +58,7 @@
         width="110"
       >
         <template #default="{row}">
-          <el-tag :type="row.status ">
+          <el-tag :type="row.status">
             {{ row.status }}
           </el-tag>
         </template>
@@ -123,6 +123,7 @@
 import { reactive, toRefs, defineComponent, onMounted } from 'vue'
 import { getArticles } from '@/apis/articles'
 import { ArticleModel } from '@/model/articleModel'
+import { formatTime } from '@/utils/index'
 
 import { ElMessage } from 'element-plus'
 export default defineComponent({
@@ -131,10 +132,12 @@ export default defineComponent({
       list: Array<ArticleModel>(), // 表格数据
       v: {}, // 是否可编辑
       listLoading: true, // 是否需要加载动画
-      listQuery: { // 请求示例参数
+      listQuery: {
+        // 请求示例参数
         page: 1,
         limit: 10
       },
+      formatTime,
       async getList() {
         dataMap.listLoading = true
         const data = await getArticles(dataMap.listQuery)
@@ -176,7 +179,6 @@ export default defineComponent({
 
     return { ...toRefs(dataMap) }
   }
-
 })
 </script>
 

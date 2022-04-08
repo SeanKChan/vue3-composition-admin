@@ -101,3 +101,48 @@ export const toggleClass = (ele: HTMLElement, className: string) => {
 export function isFunction(value: Function) {
   return typeof value === 'function'
 }
+
+export function formatTime(time: number | string | Date, format?: string) {
+  // 转换成unix时间戳（毫秒）
+  let timestamp = Date.now()
+  if (typeof time === 'number' && time.toString().length === 10) {
+    timestamp = time * 1000
+  }
+  if (typeof time === 'string' && /\d{4}-d{2}-\d{2}\s\d{2}:\d{2}:\d{2}/g.test(time)) {
+    timestamp = new Date(time).getTime()
+  }
+  if (typeof time === 'object') {
+    timestamp = time.getTime()
+  }
+
+  const now = Date.now()
+
+  const diff = (now - timestamp) / 1000
+
+  if (diff < 30) {
+    return '刚刚'
+  } else if (diff < 3600) {
+    // less 1 hour
+    return Math.ceil(diff / 60) + '分钟前'
+  } else if (diff < 3600 * 24) {
+    return Math.ceil(diff / 3600) + '小时前'
+  } else if (diff < 3600 * 24 * 2) {
+    return '1天前'
+  }
+  if (format) {
+    return parseTime(time, format)
+  } else {
+    const d = new Date(timestamp)
+    return (
+      d.getMonth() +
+      1 +
+      '月' +
+      d.getDate() +
+      '日' +
+      d.getHours() +
+      '时' +
+      d.getMinutes() +
+      '分'
+    )
+  }
+}
