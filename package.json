@@ -19,6 +19,9 @@
         "cz": "npm run lint:fix && git add --all && npx cz"
     },
     "dependencies": {
+        "@antv/l7": "^2.9.25",
+        "@antv/l7-district": "^2.3.12",
+        "@antv/l7-maps": "^2.9.25",
         "@dragndrop/vue-dropzone": "0.0.4",
         "@element-plus/icons": "^0.0.11",
         "@tinymce/tinymce-vue": "^4.0.4",

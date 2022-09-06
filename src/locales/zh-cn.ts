@@ -38,6 +38,7 @@ export default {
     barChart: '柱状图表',
     lineChart: '折线图',
     mixedChart: '混合图表',
+    mapChart: '地图图表',
     example: '综合实例',
     nested: '路由嵌套',
     menu1: '菜单 1',

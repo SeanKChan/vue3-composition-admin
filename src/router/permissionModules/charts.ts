@@ -54,6 +54,18 @@ const chartsRouter: Array<RouteRecordRaw> = [
           title: 'mixedChart',
           noCache: true
         }
+      },
+      {
+        path: 'map-chart',
+        component: () =>
+          import(
+            /* webpackChunkName: "MapChart" */ '@/views/charts/MapChartDemo.vue'
+          ),
+        name: 'MapChartDemo',
+        meta: {
+          title: 'mapChart',
+          noCache: true
+        }
       }
     ]
   }

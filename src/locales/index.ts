@@ -46,7 +46,8 @@ export const getLocale = () => {
 
 const i18n = createI18n({
   locale: getLocale(),
-  messages: messages
+  messages: messages,
+  legacy: false
 })
 
 export default i18n
