@@ -10,7 +10,7 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 // import { useI18n } from 'vue-i18n'
 import router from '@/router'
-import { RouteLocationNormalized } from 'vue-router'
+import { RouteLocationNormalized, RouteRecordRaw } from 'vue-router'
 import { useStore } from './store'
 import { UserActionTypes } from './store/modules/user/action-types'
 import { PermissionActionType } from './store/modules/permission/action-types'
@@ -50,7 +50,7 @@ router.beforeEach(async (to: RouteLocationNormalized, _: RouteLocationNormalized
           // Generate accessible routes map based on role
           store.dispatch(PermissionActionType.ACTION_SET_ROUTES, roles)
           // Dynamically add accessible routes
-          store.state.permission.dynamicRoutes.forEach((route) => {
+          store.state.permission.dynamicRoutes.forEach((route: RouteRecordRaw) => {
             router.addRoute(route)
           })
           // Hack: ensure addRoutes is complete
